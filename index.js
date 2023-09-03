@@ -1,8 +1,10 @@
 const http= require('http')
+const fs= require('fs');
 
+const home= fs.readFileSync('./index.html')  //better to use readfilesync than readfile, because it do it syncronously
 http.createServer((req,res)=>{
     if(req.url==="/"){
-        res.end("<h1>Home</h1>")
+        res.end(home)
     }
     else if(req.url=="/about"){
         res.end("<h1>about page</h1>")
