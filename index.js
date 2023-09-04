@@ -1,16 +1,13 @@
 const express= require('express')
-
+const path = require('path');
 const app= express();
 
-app.get("/getproduct",(req,res)=>{
-    // res.sendStatus(404)
-    // res.json({
-    //     result:1,
-    //     product:[]
-    // })
-    // res.status(404).json({Hii:'meri marzi'}) l
+app.get("/",(req,res)=>{
+
+    const pathlocation= path.join(__dirname,"/index.html")
+    res.sendFile(pathlocation)
 })
 
 app.listen(5000,()=>{
-    console.log("server is workng")
+    console.log("hi")
 });
