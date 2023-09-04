@@ -8,7 +8,7 @@ app.get("/getproduct",(req,res)=>{
     //     result:1,
     //     product:[]
     // })
-    res.status(404).json({Hii:'meri marzi'})
+    // res.status(404).json({Hii:'meri marzi'}) l
 })
 
 app.listen(5000,()=>{
