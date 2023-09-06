@@ -1,0 +1,17 @@
+body{
+    background-color: gray;
+}
+form{
+    background-color: white;
+    width: 40%;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap:20px;
+    padding: 20px;
+}
+input{
+    border:1px solid red;
+}
