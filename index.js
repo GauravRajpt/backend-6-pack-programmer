@@ -1,10 +1,16 @@
 const exp = require('constants');
-const express= require('express')
+const express= require('express');
+const { default: mongoose } = require('mongoose');
 const path = require('path');
 const app= express();
 
 
-const user=[];
+mongoose.connect('mongodb://127.0.0.1:27017',{
+    dbName:'backend'
+}).then(()=>{
+    console.log("mongodb connect")
+}).catch(e=>console.log(e))
+
 
 const static= express.static(__dirname+"/public");
 app.use(express.urlencoded({extended:true}))
@@ -32,5 +38,5 @@ app.post("/contact",(req,res)=>{
 })
 
 app.listen(5000,()=>{
-    console.log("hi")
+    console.log("hi");
 });
