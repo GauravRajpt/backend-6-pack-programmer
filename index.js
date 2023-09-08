@@ -3,6 +3,7 @@ const express= require('express');
 const { default: mongoose, Schema, Collection } = require('mongoose');
 const path = require('path');
 const app= express();
+const cookieparser= require("cookie-parser");
 
 
 mongoose.connect('mongodb://127.0.0.1:27017',{
@@ -17,24 +18,45 @@ const MessageSchema= new Schema({
     email:String,
 },{collection:"Message"})
 
+const isAuthenticate=(req,res,next)=>{
+    const {token}= req.cookies;
+
+    if(token){
+        next()
+    }
+    else{
+        res.render("login")
+    }
+
+   
+}
+
 const Message= mongoose.model("Message",MessageSchema)
 const static= express.static(__dirname+"/public");
 app.use(express.urlencoded({extended:true}))
+app.use(cookieparser());
 app.use(static); //using middleware
 app.set("view engine", "ejs")
-app.get("/",(req,res)=>{
-    
-    res.render("index.ejs",{
-        name:"gaurav"
-    });
+app.get("/",isAuthenticate,(req,res)=>{
+    res.render("logout");
+
+   
 })
 
+app.get("/logout",(req,res)=>{
+    res.cookie("token",null,{
+        httpOnly:true,
+        expires:new Date(Date.now()),
+    })
+    res.redirect("/")
+})
 
-
-app.post("/contact",(req,res)=>{
-   
-    Message.create({name:req.body.name,email:req.body.email})
-    res.send(req.body.name)
+app.post("/login",(req,res)=>{
+   res.cookie("token","123",{
+    httpOnly:true,
+    expires:new Date(Date.now()+60*1000)
+   })
+    res.redirect("/")
 })
 
 app.listen(5000,()=>{
